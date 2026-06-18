@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Locations - Momla Wiki</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      background-color: #111;
+      padding: 15px 30px;
+      display: flex;
+      gap: 20px;
+      border-bottom: 2px solid #444;
+    }
+
+    .navbar a {
+      color: #cccccc;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 8px 16px;
+      border-radius: 4px;
+    }
+
+    .navbar a:hover {
+      background-color: #333;
+      color: #ffffff;
+    }
+
+    .navbar a.active {
+      background-color: #c0392b;
+      color: #ffffff;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 30px;
+    }
+
+    .map-section {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .map-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      flex-shrink: 0;
+    }
+
+    .map-bg {
+      width: 400px;
+      height: 400px;
+      background-color: #2a2a2a;
+      border: 2px solid #444;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .map-label {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #666;
+      font-size: 13px;
+    }
+
+    .room {
+      position: absolute;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 2px solid #555;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #aaa;
+      text-align: center;
+    }
+
+    .room:hover {
+      background-color: rgba(192, 57, 43, 0.4);
+      border-color: #c0392b;
+      color: #ffffff;
+    }
+
+    .room.active {
+      background-color: rgba(192, 57, 43, 0.5);
+      border-color: #c0392b;
+      color: #ffffff;
+    }
+
+    .info-panel {
+      flex: 1;
+      background-color: #222;
+      border: 1px solid #333;
+      border-radius: 6px;
+      padding: 24px;
+      min-height: 200px;
+    }
+
+    .info-panel h2 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      color: #c0392b;
+    }
+
+    .info-panel p {
+      color: #aaa;
+      margin: 0 0 16px 0;
+    }
+
+    .info-panel ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .info-panel ul li {
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+      color: #ddd;
+    }
+
+    .info-panel ul li:last-child {
+      border-bottom: none;
+    }
+
+    .placeholder {
+      color: #555;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="items.html">Items</a>
+    <a href="locations.html" class="active">Locations</a>
+  </div>
+
+  <div class="content">
+    <h1>Momla Area</h1>
+
+    <div class="map-section">
+
+      <div class="map-container">
+        <div class="map-bg"></div>
+        <span class="map-label">Momla Area</span>
+
+        <div class="room" style="left: 150px; top: 150px; width: 100px; height: 100px;"
+          onclick="showRoom('center')" id="room-center">
+          Center
+        </div>
+
+      </div>
+
+      <div class="info-panel" id="info-panel">
+        <p class="placeholder">Hover over a room on the map to see its contents.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    var rooms = {
+      center: {
+        name: "Center of Momla",
+        description: "The middle of the Momla area.",
+        items: ["Health Potion", "Old Key"]
+      }
+    };
+
+    function showRoom(roomId) {
+      var room = rooms[roomId];
+
+      document.querySelectorAll('.room').forEach(function(r) {
+        r.classList.remove('active');
+      });
+      document.getElementById('room-' + roomId).classList.add('active');
+
+      var panel = document.getElementById('info-panel');
+      var itemsList = room.items.map(function(item) {
+        return '<li>' + item + '</li>';
+      }).join('');
+
+      panel.innerHTML =
+        '<h2>' + room.name + '</h2>' +
+        '<p>' + room.description + '</p>' +
+        '<ul>' + itemsList + '</ul>';
+    }
+  </script>
+
+</body>
+</html>
